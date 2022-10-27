@@ -1,0 +1,44 @@
+download.file('https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip',
+              destfile = './hw1_data.zip', method = 'curl', quiet = T)
+unzip(zipfile = 'hw1_data.zip')
+rawData <- read.table('household_power_consumption.txt', header = T, stringsAsFactors = F,
+                      na.strings = "?", sep = ';', quote = "", skip = 66636, nrows = 2880)
+tail(rawData, 10)
+
+#########
+
+plot1 <- hist(rawData$GlobalActivePower, col = 'red',
+     main = 'Global Active Power',
+     xlab = 'Global Active Power (kilowatts)')
+     
+plot2 <- plot(x = rawData$DateTime, y = rawData$GlobalActivePower, 
+     type = 'l', xlab = NA, ylab = 'Global Active Power (kilowatts)')
+     
+plot3 <- plot(x = rawData$DateTime, y = rawData$SubMetering1, type = 'l',
+     xlab = NA, ylab = 'Energy sub metering')
+lines(x = rawData$DateTime, y = rawData$SubMetering2, col = 'red')
+lines(x = rawData$DateTime, y = rawData$SubMetering3, col = 'blue')
+legend('topright', 
+       legend = c('Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'),
+       col = c('black', 'red', 'blue'),
+       lwd = 1)
+
+par(mfrow = c(2, 2)) 
+
+plot4_1 <- plot(x = rawData$DateTime, y = rawData$GlobalActivePower, 
+     type = 'l', xlab = NA, ylab = 'Global Active Power')
+     
+plot4_2 <- plot(x = rawData$DateTime, y = rawData$Voltage, 
+     type = 'l', xlab = 'datetime', ylab = 'Voltage')
+
+plot4_3 <- plot(x = rawData$DateTime, y = rawData$SubMetering1, type = 'l',
+     xlab = NA, ylab = 'Energy sub metering')
+lines(x = rawData$DateTime, y = rawData$SubMetering2, col = 'red')
+lines(x = rawData$DateTime, y = rawData$SubMetering3, col = 'blue')
+legend('topright', 
+       legend = c('Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'),
+       col = c('black', 'red', 'blue'),
+       lwd = 1, bty = 'n')
+
+plot4_4 <- plot(x = rawData$DateTime, y = rawData$GlobalReactivePower, type = 'l',
+     xlab = 'datetime', ylab = 'Global_reactive_power')
